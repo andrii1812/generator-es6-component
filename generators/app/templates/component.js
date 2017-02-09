@@ -1,4 +1,4 @@
-import <%= capName%>Controller from '<%= componentName%>.controller.js';
+import <%= capName%>Controller from './<%= componentName%>.controller.js';
 
 export default {
     template: '',

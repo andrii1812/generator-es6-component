@@ -1,6 +1,6 @@
 {
   "name": "generator-es6-component",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "yeoman generator for scaffolding es6 angular 1.5 components",
   "homepage": "https://github.com/andrii1812/generator-es6-component.git",
   "author": {
@@ -17,13 +17,15 @@
     "yeoman"
   ],
   "dependencies": {
-    "yeoman-generator": "^1.0.0",
+    "camelcase": "^4.0.0",
     "chalk": "^1.1.3",
+    "kebab-case": "^1.0.0",
+    "yeoman-generator": "^1.0.0",
     "yosay": "^1.2.1"
   },
   "repository": {
-	"type": "git",
-	"url" : "https://github.com/andrii1812/generator-es6-component.git"
+    "type": "git",
+    "url": "https://github.com/andrii1812/generator-es6-component.git"
   },
   "license": "Apache-2.0"
 }

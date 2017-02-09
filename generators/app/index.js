@@ -1,12 +1,18 @@
 'use strict';
-var Generator = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const camelCase = require('camelcase');
+const kebabCase = require('kebab-case');
 
-function addCapName(props) {
+function transformProps(props) {
+    props.componentName = camelCase(props.componentName);
+
     var capName = props.componentName;
     capName = capName.charAt(0).toUpperCase() + capName.substr(1);
     props.capName = capName;
+
+    props.styleName = kebabCase(props.componentName) + '-container';
 }
 
 module.exports = Generator.extend({
@@ -26,8 +32,7 @@ module.exports = Generator.extend({
                 componentName: this.options.componentName,
                 withModule: this.options.withModule || false
             };
-            
-            addCapName(this.props);
+            transformProps(this.props);
             return;
         }
 
@@ -47,13 +52,12 @@ module.exports = Generator.extend({
 
         return this.prompt(prompts).then(function (props) {
             this.props = props;
-            addCapName(this.props);
+            transformProps(this.props);
         }.bind(this));
     },
     writing: function () {
         let componentName = this.props.componentName;
-        let folder = this.props.componentName;
-        let basePath = folder + '/' + componentName;
+        let basePath = componentName + '/' + componentName;
 
         this.fs.copyTpl(
             this.templatePath('component.js'),
@@ -75,14 +79,16 @@ module.exports = Generator.extend({
             );
         }
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath('styles.scss'),
-            this.destinationPath(basePath + '.scss')
+            this.destinationPath(basePath + '.scss'),
+            this.props
         );
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath('template.html'),
-            this.destinationPath(basePath + '.template.html')
+            this.destinationPath(basePath + '.template.html'),
+            this.props
         );
     }
 });
